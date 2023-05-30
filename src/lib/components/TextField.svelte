@@ -32,13 +32,12 @@
 	}
 </script>
 
-<fieldset>
+<section {...extraWrapperOptions}>
 	<div
 		class="text-field-container style-{style}"
 		class:error
 		class:has-icon={icon}
 		bind:this={wrapper}
-		{...extraWrapperOptions}
 		style="display: {display}"
 	>
 		{#if isTextarea}
@@ -85,9 +84,9 @@
 			</span>
 		{/if}
 		{#if trailingIcon}
-			<button class="trailing-button" on:click={() => dispatch('trailingClick')}>
+			<div class="trailing-button">
 				<Icon d={trailingIcon} />
-			</button>
+			</div>
 		{/if}
 		<div class="text-field-layer" />
 		<label for={id}>
@@ -97,7 +96,7 @@
 	{#if supportingText}
 		<p class="supporting" class:error>{supportingText}</p>
 	{/if}
-</fieldset>
+</section>
 
 <style lang="postcss">
 	.text-field-container {
@@ -114,13 +113,13 @@
 		@apply resize-none;
 	}
 	.text-field-layer {
-		@apply pointer-events-none absolute inset-0 rounded-[inherit] transition-all;
+		@apply pointer-events-none absolute inset-0 rounded-[inherit] transition-all duration-200;
 	}
 	label {
 		transition: all 250ms, font 500ms;
 		transition-timing-function: cubic-bezier(0.254, 0.029, 0, 1.2);
 		color: rgb(var(--error, currentColor));
-		@apply pointer-events-none absolute left-4 top-4 ease-in-out;
+		@apply pointer-events-none absolute left-4 top-4;
 	}
 	.error {
 		--error: var(--color-error);
@@ -179,7 +178,7 @@
 	}
 	.trailing-button {
 		fill: rgb(var(--error, var(--color-primary)));
-		@apply text-on-surface-variant absolute bottom-0 right-0 top-0 inline-flex w-[3.25rem] cursor-pointer items-center 
+		@apply text-on-surface-variant absolute bottom-0 right-0 top-0 inline-flex w-[3.25rem] items-center 
 		justify-center border-none bg-transparent transition-all duration-200;
 	}
 	.trailing-button:is(:focus-visible, :active) {
@@ -205,9 +204,6 @@
 		.style-filled:hover > .text-field-layer {
 			background-color: rgb(var(--color-on-surface) / 0.08);
 		}
-		.trailing-button:hover {
-			background-color: rgb(var(--color-on-surface-variant) / 0.08);
-		}
 	}
 	.text-field-container:focus-within > :is(label, .text-field-layer) {
 		color: rgb(var(--error, var(--color-primary)));
@@ -216,7 +212,6 @@
 	.text-field-container:focus-within > :is(.text-field-layer) {
 		@apply ring-primary ring-2;
 	}
-
 	.text-field-input[type='date'] {
 		@apply pl-[0.875rem];
 	}
@@ -257,16 +252,6 @@
 			.has-trailing-icon.text-field-input[type='date'] {
 				padding-right: 0;
 			}
-		}
-	}
-
-	.text-field-container {
-		print-color-adjust: exact;
-		-webkit-print-color-adjust: exact;
-	}
-	@media screen and (forced-colors: active) {
-		.style-filled {
-			background-color: field;
 		}
 	}
 </style>

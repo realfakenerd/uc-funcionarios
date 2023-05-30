@@ -3,7 +3,7 @@ export interface Funcionario {
   nome: string;
   sobrenome: string;
   cargo: CARGO;
-  dataInicio: Date;
+  dataInicio: string | null;
   ativo: boolean;
 }
 

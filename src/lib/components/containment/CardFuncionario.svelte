@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { CARGO } from '$lib/types';
 	import { formatDate } from '$lib/utils';
+	import Form from '../Form.svelte';
 	import Icon from '../Icon.svelte';
 	import BottomSheet from './BottomSheet.svelte';
 	import Dialog from './Dialog.svelte';
@@ -8,8 +9,8 @@
 	export let nome = '';
 	export let sobrenome = '';
 	export let cargo: CARGO;
-	export let dataInicio: string | Date = '';
-	export let ativo: boolean = true;
+	export let dataInicio: string | null;
+	export let estaAtivo: boolean = true;
 
 	let showEditBottomSheet = false;
 	let isDeleteModalOpen = false;
@@ -30,7 +31,7 @@
 	<hgroup class="group-hover:text-on-tertiary-container">
 		<div>
 			<h1>{nome} {sobrenome}</h1>
-			{#if ativo}
+			{#if estaAtivo}
 				<span>funcionario ativo</span>
 			{/if}
 		</div>
@@ -39,28 +40,28 @@
 
 	<section>
 		<div>
-			<p>inicou em: {formatDate(dataInicio)}</p>
+			<p>inicou em: {dataInicio}</p>
 		</div>
 		<ul>
 			<li>
 				<button
 					on:click={() => (showEditBottomSheet = true)}
-					class="interactive-bg-secondary-container fill-on-secondary-container"
+					class="interactive-bg-secondary fill-on-secondary"
 				>
 					<Icon
 						d={`M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z`}
 					/>
 				</button>
 				{#if showEditBottomSheet}
-					<BottomSheet on:close={() => (showEditBottomSheet = false)}>
-						{nome}
+					<BottomSheet height={370} on:close={() => (showEditBottomSheet = false)}>
+						<Form {cargo} iniciouEm={dataInicio} {estaAtivo} {sobrenome} {nome} formMethod="PUT"/>
 					</BottomSheet>
 				{/if}
 			</li>
 			<li>
 				<button
 					on:click={() => (isDeleteModalOpen = !isDeleteModalOpen)}
-					class="interactive-bg-error-container fill-on-error-container"
+					class="interactive-bg-error fill-on-error"
 				>
 					<Icon
 						d={`M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z`}
@@ -83,7 +84,7 @@
 
 <style lang="postcss">
 	li.card {
-		@apply gap-y-2 bg-background text-on-background;
+		@apply gap-y-2 interactive-bg-surface-variant text-on-surface-variant;
 	}
 
 	hgroup > div {
@@ -95,8 +96,8 @@
 	}
 
 	hgroup span {
-		@apply text-label-small p-1 bg-primary-container flex items-center rounded-lg
-	text-on-primary-container;
+		@apply text-label-small p-1 bg-primary flex items-center rounded-lg
+		text-on-primary;
 	}
 
 	h2 {
@@ -108,7 +109,7 @@
 	}
 
 	section > div {
-		@apply p-2 bg-surface-variant text-on-surface-variant rounded-lg
+		@apply p-2 bg-surface text-on-surface rounded-lg
 			text-label-medium;
 	}
 
@@ -124,9 +125,5 @@
 		@apply w-10 h-10 flex items-center justify-center rounded-full;
 	}
 
-	@media (hover: hover) {
-		li.card:hover {
-			@apply shadow-md shadow-on-surface/10;
-		}
-	}
+	
 </style>
