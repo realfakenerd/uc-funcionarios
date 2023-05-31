@@ -40,7 +40,7 @@
 		</section>
 
 		<TextField
-			extraWrapperOptions={{ class: 'h-[3.5rem]' }}
+			extraWrapperOptions={{ class: 'h-[3.5rem] w-full' }}
 			value={iniciouEm}
 			style="outlined"
 			isDate={true}
@@ -91,7 +91,7 @@
 
 <style lang="postcss">
 	.select-container {
-		@apply relative h-14 w-[20rem] min-w-[15rem] max-w-full rounded-lg text-on-surface-variant;
+		@apply relative h-14 min-w-[15rem] w-full rounded-lg text-on-surface-variant;
 	}
 
 	.select-input {

@@ -53,7 +53,7 @@
 		</div>
 	</div>
 
-	<div class="flex max-w-xl flex-col gap-4">
+	<div class="flex max-w-xl flex-col gap-4 self-center">
 		<Form
 			id={funcionario.id}
 			cargo={funcionario.cargo}
