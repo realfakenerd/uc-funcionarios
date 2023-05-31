@@ -30,7 +30,8 @@
 				class:value={cargo}
 				bind:value={cargo}
 				name="cargoSelect"
-				id="selection"
+				id="cargoSelect"
+				aria-labelledby="cargoSelectLabel"
 			>
 				<option value="DESENVOLVEDOR">Desenvolvedor</option>
 				<option value="ADMINISTRADOR">Administrador</option>
