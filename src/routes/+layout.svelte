@@ -3,12 +3,11 @@
 	import Form from '$lib/components/Form.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import BottomSheet from '$lib/components/containment/BottomSheet.svelte';
-	import Dialog from '$lib/components/containment/Dialog.svelte';
 	import '@fontsource/roboto';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
 	export let data;
-	let showModal = false;
+	let showAddBottomSheet = false;
 
 </script>
 
@@ -34,17 +33,16 @@
 		<slot />
 	</main>
 {/key}
-<Dialog
-	title="Enviar funcionário pro Banco de Dados?"
-	confirmLabel=""
-	bind:open={showModal}
->
-	<Form iniciouEm="" nome="" sobrenome="" />
-</Dialog>
+
+{#if showAddBottomSheet}
+	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
+		<Form iniciouEm="" nome="" sobrenome="" />
+	</BottomSheet>
+{/if}
 
 <div class="fixed bottom-2 right-3">
 	<button
-		on:click={() => (showModal = true)}
+		on:click={() => (showAddBottomSheet = true)}
 		class="fab fab-normal interactive-bg-tertiary"
 		title="FAB"
 	>

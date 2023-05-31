@@ -75,7 +75,6 @@
 			Remover funcionario
 		</button>
 		<Dialog
-			isErrorModal
 			on:closed={deletaFuncionario}
 			title="Remover funcionario?"
 			cancelLabel="Não remover"
