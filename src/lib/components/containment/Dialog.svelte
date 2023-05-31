@@ -8,6 +8,7 @@
 	export let preventDismiss = false;
 	const dispatch = createEventDispatcher();
 	export let open = false;
+	export let isErrorModal = false;
 	let dialog: HTMLDialogElement;
 	$: {
 		if (!dialog) break $;
@@ -22,8 +23,8 @@
 </script>
 
 {#key open}
-	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<dialog
+		class="{isErrorModal ? 'bg-error-container' : 'bg-surface'}"
 		bind:this={dialog}
 		on:cancel|preventDefault={() => {
 			if (preventDismiss) return;
@@ -41,12 +42,11 @@
 	>
 		<div class="container" on:click|stopPropagation>
 			<h2 class="text-headline-small">{title}</h2>
-			<hr class="divider-middle divider border-on-error-container/70" />
 			<div class="text-body-medium text-on-error-container/70"><slot /></div>
 			<div class="buttons">
 				{#if cancelLabel}
 					<button
-						class="btn interactive-bg-error-container"
+						class="btn {isErrorModal ? 'interactive-bg-error-container' : 'interactive-bg-primary-container' }"
 						on:click={() => {
 							open = false;
 							dispatch('closed', { method: 'clickCancel' });
@@ -56,7 +56,7 @@
 					</button>
 				{/if}
 				<button
-					class="btn interactive-bg-error"
+					class="btn {isErrorModal ? 'interactive-bg-error' : 'interactive-bg-primary'}"
 					on:click={() => {
 						open = false;
 						dispatch('closed', { method: 'clickConfirm' });
@@ -71,7 +71,7 @@
 
 <style lang="postcss">
 	dialog {
-		@apply overflow-auto rounded-[1.75rem] border-none bg-error-container p-0;
+		@apply overflow-auto rounded-[1.75rem] border-none p-0;
 	}
 	dialog::backdrop {
 		background-color: rgb(0 0 0 / 0.5);
