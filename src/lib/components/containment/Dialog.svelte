@@ -24,8 +24,13 @@
 
 {#key open}
 	<dialog
+		tabindex="-1"
+		aria-labelledby="modal-title"
 		class="{isErrorModal ? 'bg-error-container' : 'bg-surface'}"
 		bind:this={dialog}
+		aria-modal={open}
+		aria-hidden={!open}
+		role="dialog"
 		on:cancel|preventDefault={() => {
 			if (preventDismiss) return;
 			open = false;
@@ -40,12 +45,14 @@
 		out:enterExit={{ duration: 200, easing: easeEmphasizedAccel }}
 		use:outroClass
 	>
-		<div class="container" on:click|stopPropagation>
-			<h2 class="text-headline-small">{title}</h2>
+		<div class="container" on:click|stopPropagation aria-describedby="modal-description">
+			<div id="modal-description" class="sr-only">{title}. {confirmLabel}. {cancelLabel}</div>
+			<h2 class="text-headline-small" role="heading" aria-level="2">{title}</h2>
 			<div class="text-body-medium text-on-error-container/70"><slot /></div>
 			<div class="buttons">
 				{#if cancelLabel}
 					<button
+					
 						class="btn {isErrorModal ? 'interactive-bg-error-container' : 'interactive-bg-primary-container' }"
 						on:click={() => {
 							open = false;
@@ -56,6 +63,7 @@
 					</button>
 				{/if}
 				<button
+					aria-label="Fechar"
 					class="btn {isErrorModal ? 'interactive-bg-error' : 'interactive-bg-primary'}"
 					on:click={() => {
 						open = false;

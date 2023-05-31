@@ -10,12 +10,12 @@
 </script>
 
 <li>
-	<a href={'/funcionario/' + id} class="group card" id={String(id)}>
+	<a href={'/funcionario/' + id} class="group card" id={String(id)} aria-label={`Perfil de ${nome} ${sobrenome}`}>
 		<hgroup class="group-hover:text-on-tertiary-container">
 			<div>
-				<h1>{nome} {sobrenome}</h1>
+				<h1 aria-label={`Nome: ${nome} ${sobrenome}`}>{nome} {sobrenome}</h1>
 				{#if ativo}
-					<span>funcionario ativo</span>
+					<span role="status" aria-live="assertive">funcionario ativo</span>
 				{/if}
 			</div>
 			<h2>{cargo.toLowerCase()}</h2>
@@ -23,7 +23,7 @@
 
 		<section>
 			<div>
-				<p>Iniciou em: {formatDate(dataInicio)}</p>
+				<p aria-live="polite">Iniciou em: {formatDate(dataInicio)}</p>
 			</div>
 		</section>
 	</a>

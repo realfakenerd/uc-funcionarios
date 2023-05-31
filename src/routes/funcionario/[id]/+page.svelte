@@ -28,6 +28,7 @@
 	<div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
 		<div class="flex flex-row items-center gap-4">
 			<button
+				title="Go back button"
 				class="rounded-2xl fill-on-surface p-4 transition-all duration-200 hover:bg-surface-variant-hover hover:fill-on-surface-variant"
 				on:click={() => history.back()}
 			>

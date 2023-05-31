@@ -6,7 +6,7 @@
 		HTMLTextareaAttributes
 	} from 'svelte/elements';
 	let wrapper: HTMLDivElement, textarea: HTMLTextAreaElement;
-	let id = `input-${Math.random() * 1.23}`;
+	let id = `input-${Math.random() * 999}`;
 	export let value = '';
 	export let error = false;
 	export let style: 'filled' | 'outlined' = 'outlined';
@@ -30,7 +30,7 @@
 	}
 </script>
 
-<section {...extraWrapperOptions}>
+<section role="group" {...extraWrapperOptions}>
 	<div
 		class="text-field-container style-{style}"
 		class:error
@@ -49,6 +49,8 @@
 				required
 				rows="1"
 				on:input={resize}
+				aria-invalid={error}
+        		aria-describedby={supportingText ? `${id}-supporting` : undefined}
 				{...extraInputOptions}
 			/>
 		{:else}
@@ -68,31 +70,33 @@
 						e.preventDefault();
 				}}
 				{...isDate ? { type: 'date' } : {}}
+				aria-invalid={error}
+        		aria-describedby={supportingText ? `${id}-supporting` : undefined}
 				{...extraInputOptions}
 			/>
 		{/if}
 		{#if icon}
-			<span class="leading-icon">
+			<span class="leading-icon" aria-hidden="true">
 				<Icon d={icon} />
 			</span>
 		{/if}
 		{#if error}
-			<span class="trailing-icon">
+			<span class="trailing-icon" aria-hidden="true">
 				<Icon d={iconError ?? ''} />
 			</span>
 		{/if}
 		{#if trailingIcon}
-			<div class="trailing-button">
+			<div class="trailing-button" role="button" tabindex="0">
 				<Icon d={trailingIcon} />
 			</div>
 		{/if}
 		<div class="text-field-layer" />
-		<label for={id}>
+		<label for={id} id={`${id}-label`}>
 			{title}
 		</label>
 	</div>
 	{#if supportingText}
-		<p class="supporting" class:error>{supportingText}</p>
+		<p class="supporting" class:error id={`${id}-supporting`} aria-live="assertive">{supportingText}</p>
 	{/if}
 </section>
 
