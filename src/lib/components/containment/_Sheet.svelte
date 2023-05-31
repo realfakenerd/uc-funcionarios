@@ -15,6 +15,6 @@
 
 <style lang="postcss">
 	.bottom-content {
-		@apply bg-primary/5 px-4 min-h-full;
+		@apply min-h-full bg-primary/5 px-4;
 	}
 </style>

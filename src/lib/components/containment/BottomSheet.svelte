@@ -33,9 +33,23 @@
 	const moveSheet = (e: MouseEvent) => {
 		if (!sheet) return;
 		if (e.detail) return;
-		if (height == sheet.offsetHeight) goingUp = false;
-		if (height == 48) goingUp = true;
-		if (goingUp) height = height + 160;
+		if (height === sheet.offsetHeight) goingUp = false;
+		if (height === 48) goingUp = true;
+		if (goingUp) height += 160;
+		else height = Math.max(height - 160, 48);
+	};
+	const handleTouchMove = (e: TouchEvent) => {
+		if (!isDragging) return;
+		const distance = e.touches[0].clientY - startY;
+		height -= distance;
+		startY = e.touches[0].clientY;
+	};
+	const moveSheetTouch = (e: TouchEvent) => {
+		if (!sheet) return;
+		if (e.touches.length > 1) return;
+		if (height === sheet.offsetHeight) goingUp = false;
+		if (height === 48) goingUp = true;
+		if (goingUp) height += 160;
 		else height = Math.max(height - 160, 48);
 	};
 	const open = (node: HTMLDialogElement) => node.showModal();
@@ -43,7 +57,7 @@
 
 <svelte:window
 	on:mousemove={handleMouseMove}
-	on:touchmove={(e) => handleMouseMove(e.touches[0])}
+	on:touchmove={handleTouchMove}
 	on:mouseup={() => (isDragging = false)}
 	on:touchend={() => (isDragging = false)}
 />
@@ -80,7 +94,7 @@
 					startY = e.clientY;
 				}}
 			>
-				<button on:click={moveSheet} />
+				<button on:click={moveSheet} on:touchend={moveSheetTouch} />
 			</div>
 		{/if}
 		<slot />

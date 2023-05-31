@@ -5,15 +5,18 @@
 	export let title: string;
 	export let confirmLabel: string;
 	export let cancelLabel: string | null = null;
-	export let open = false;
 	export let preventDismiss = false;
 	const dispatch = createEventDispatcher();
+	export let open = false;
 	let dialog: HTMLDialogElement;
 	$: {
 		if (!dialog) break $;
 		tick().then(() => {
-			if (open) dialog.showModal();
-			else dialog.close();
+			if (open && !dialog.hasAttribute('open')) {
+				dialog.showModal();
+			} else if (!open && dialog.hasAttribute('open')) {
+				dialog.close();
+			}
 		});
 	}
 </script>
@@ -38,8 +41,8 @@
 	>
 		<div class="container" on:click|stopPropagation>
 			<h2 class="text-headline-small">{title}</h2>
-			<hr class="divider border-on-error-container/70 divider-middle" />
-			<div class="text-on-error-container/70 text-body-medium"><slot /></div>
+			<hr class="divider-middle divider border-on-error-container/70" />
+			<div class="text-body-medium text-on-error-container/70"><slot /></div>
 			<div class="buttons">
 				{#if cancelLabel}
 					<button
@@ -68,7 +71,7 @@
 
 <style lang="postcss">
 	dialog {
-		@apply p-0 border-none overflow-auto rounded-[1.75rem] bg-error-container;
+		@apply overflow-auto rounded-[1.75rem] border-none bg-error-container p-0;
 	}
 	dialog::backdrop {
 		background-color: rgb(0 0 0 / 0.5);
@@ -94,7 +97,7 @@
 		}
 	}
 	.container {
-		@apply flex flex-col p-6 gap-y-4 min-w-[17.5rem] max-w-[35rem];
+		@apply flex min-w-[17.5rem] max-w-[35rem] flex-col gap-y-4 p-6;
 	}
 	.buttons {
 		@apply flex justify-end gap-x-2;

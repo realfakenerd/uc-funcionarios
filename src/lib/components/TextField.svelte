@@ -100,14 +100,14 @@
 
 <style lang="postcss">
 	.text-field-container {
-		@apply text-on-surface-variant relative h-14 w-full min-w-[15rem];
+		@apply relative h-14 w-full min-w-[15rem] text-on-surface-variant;
 	}
 	.text-field-container :global(svg) {
 		@apply h-6 w-6;
 	}
 	.text-field-input {
-		@apply text-on-surface appearance-none absolute inset-0 h-full w-full border-none 
-		bg-transparent px-4 outline-none;
+		@apply absolute inset-0 h-full w-full appearance-none border-none bg-transparent 
+		px-4 text-on-surface outline-none;
 	}
 	textarea {
 		@apply resize-none;
@@ -125,14 +125,14 @@
 		--error: var(--color-error);
 	}
 	.supporting {
-		@apply text-on-surface-variant text-label-small mt-1 px-4;
+		@apply mt-1 px-4 text-label-small text-on-surface-variant;
 	}
 	.supporting.error {
 		@apply text-error;
 	}
 
 	.style-filled {
-		@apply bg-surface-variant rounded-t-lg;
+		@apply rounded-t-lg bg-surface-variant;
 	}
 	.style-filled > .text-field-layer {
 		color: rgb(var(--error, var(--color-on-surface-variant)));
@@ -178,8 +178,8 @@
 	}
 	.trailing-button {
 		fill: rgb(var(--error, var(--color-primary)));
-		@apply text-on-surface-variant absolute bottom-0 right-0 top-0 inline-flex w-[3.25rem] items-center 
-		justify-center border-none bg-transparent transition-all duration-200;
+		@apply absolute bottom-0 right-0 top-0 inline-flex w-[3.25rem] items-center justify-center 
+		border-none bg-transparent text-on-surface-variant transition-all duration-200;
 	}
 	.trailing-button:is(:focus-visible, :active) {
 		background-color: rgb(var(--color-on-surface-variant) / 0.12);
@@ -210,7 +210,7 @@
 	}
 
 	.text-field-container:focus-within > :is(.text-field-layer) {
-		@apply ring-primary ring-2;
+		@apply ring-2 ring-primary;
 	}
 	.text-field-input[type='date'] {
 		@apply pl-[0.875rem];

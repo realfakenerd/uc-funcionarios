@@ -9,7 +9,7 @@
 	export let sobrenome = '';
 	export let cargo: CARGO;
 	export let dataInicio: string;
-	export let ativo: boolean;
+	export let ativo: string;
 
 	let showEditBottomSheet = false;
 	let isDeleteModalOpen = false;
@@ -21,6 +21,7 @@
 				await fetch('http://187.60.56.72:9191/funcionario/' + id, {
 					method: 'DELETE'
 				});
+				location.reload();
 			}
 		} catch (error) {
 			console.error(error);
@@ -30,77 +31,78 @@
 	const data = dataInicio?.split('-').reverse().join('/');
 </script>
 
-<li class="card group" id={String(id)}>
-	<hgroup class="group-hover:text-on-tertiary-container">
-		<div>
-			<h1>{nome} {sobrenome}</h1>
-			{#if ativo}
-				<span>funcionario ativo</span>
-			{/if}
-		</div>
-		<h2>{cargo.toLowerCase()}</h2>
-	</hgroup>
-
-	<section>
-		<div>
-			<p>Iniciou em: {data}</p>
-		</div>
-		<ul>
-			<li>
-				<button
-					on:click={() => (showEditBottomSheet = true)}
-					class="interactive-bg-secondary fill-on-secondary"
-				>
-					<Icon
-						d={`M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z`}
-					/>
-				</button>
-				{#if showEditBottomSheet}
-					<BottomSheet height={370} on:close={() => (showEditBottomSheet = false)}>
-						<Form
-							{id}
-							{cargo}
-							iniciouEm={dataInicio}
-							{ativo}
-							{sobrenome}
-							{nome}
-							formMethod="POST"
-							extraOptions={{ action: '?/updateFuncionario' }}
-						/>
-					</BottomSheet>
+<li>
+	<a href={'/funcionario/' + id} class="group card" id={String(id)}>
+		<hgroup class="group-hover:text-on-tertiary-container">
+			<div>
+				<h1>{nome} {sobrenome}</h1>
+				{#if ativo}
+					<span>funcionario ativo</span>
 				{/if}
-			</li>
-			<li>
-				<button
-					on:click={() => (isDeleteModalOpen = !isDeleteModalOpen)}
-					class="interactive-bg-error fill-on-error"
-				>
-					<Icon
-						d={`M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z`}
-					/>
-				</button>
-				<Dialog
-					on:closed={deletaFuncionario}
-					title="Remover funcionario?"
-					cancelLabel="Não remover"
-					confirmLabel="Remover"
-					bind:open={isDeleteModalOpen}
-				>
-					Realmente deseja remover o funcionario {nome}
-					{sobrenome}
-				</Dialog>
-			</li>
-		</ul>
-	</section>
+			</div>
+			<h2>{cargo.toLowerCase()}</h2>
+		</hgroup>
+
+		<section>
+			<div>
+				<p>Iniciou em: {data}</p>
+			</div>
+			<ul>
+				<li>
+					<button
+						on:click={() => (showEditBottomSheet = true)}
+						class="interactive-bg-secondary fill-on-secondary"
+					>
+						<Icon
+							d={`M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z`}
+						/>
+					</button>
+					{#if showEditBottomSheet}
+						<BottomSheet height={370} on:close={() => (showEditBottomSheet = false)}>
+							<Form
+								{id}
+								{cargo}
+								iniciouEm={dataInicio}
+								{ativo}
+								{sobrenome}
+								{nome}
+								action="?/updateFuncionario"
+							/>
+						</BottomSheet>
+					{/if}
+				</li>
+				<li>
+					<button
+						on:click={() => (isDeleteModalOpen = !isDeleteModalOpen)}
+						class="interactive-bg-error fill-on-error"
+					>
+						<Icon
+							d={`M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z`}
+						/>
+					</button>
+					<Dialog
+						on:closed={deletaFuncionario}
+						title="Remover funcionario?"
+						cancelLabel="Não remover"
+						confirmLabel="Remover"
+						bind:open={isDeleteModalOpen}
+					>
+						Realmente deseja remover o funcionario {nome}
+						{sobrenome}
+					</Dialog>
+				</li>
+			</ul>
+		</section>
+	</a>
 </li>
 
 <style lang="postcss">
-	li.card {
-		@apply gap-y-2 interactive-bg-surface-variant text-on-surface-variant;
+	a.card {
+		@apply interactive-bg-surface-variant w-full gap-y-2 text-on-surface-variant;
 	}
 
 	hgroup > div {
-		@apply inline-flex justify-between items-center gap-2 w-full;
+		@apply inline-flex w-full items-center justify-between gap-2;
 	}
 
 	h1 {
@@ -108,21 +110,21 @@
 	}
 
 	hgroup span {
-		@apply text-label-small p-1 bg-primary flex items-center rounded-lg
+		@apply flex items-center rounded-lg bg-primary p-1 text-label-small
 		text-on-primary;
 	}
 
 	h2 {
-		@apply capitalize text-label-small;
+		@apply text-label-small capitalize;
 	}
 
 	section {
-		@apply flex flex-row justify-between items-center;
+		@apply flex flex-row items-center justify-between;
 	}
 
 	section > div {
-		@apply p-2 bg-surface text-on-surface rounded-lg
-			text-label-medium;
+		@apply rounded-lg bg-surface p-2 text-label-medium
+			text-on-surface;
 	}
 
 	ul {
@@ -130,10 +132,10 @@
 	}
 
 	ul li {
-		@apply w-12 h-12 flex items-center justify-center;
+		@apply flex h-12 w-12 items-center justify-center;
 	}
 
 	li button {
-		@apply w-10 h-10 flex items-center justify-center rounded-full;
+		@apply flex h-10 w-10 items-center justify-center rounded-full;
 	}
 </style>

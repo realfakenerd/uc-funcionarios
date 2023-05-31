@@ -18,13 +18,7 @@
 
 {#if showAddBottomSheet}
 	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
-		<Form
-			iniciouEm=""
-			nome=""
-			sobrenome=""
-			formMethod="POST"
-			extraOptions={{ action: '?/createFuncionario' }}
-		/>
+		<Form iniciouEm="" nome="" sobrenome="" action="?/createFuncionario" />
 	</BottomSheet>
 {/if}
 
