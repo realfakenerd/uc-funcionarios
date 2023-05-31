@@ -5,7 +5,7 @@ export const actions: Actions = {
 	default: async ({ request, fetch }) => {
 		const id = Math.round(Math.random() * 999);
 		const funcionario = await createOrUpdateFuncionario(await request.formData());
-		console.log('---------------------------')
+		console.log('---------------------------');
 		const res = await fetch('http://187.60.56.72:9191/funcionario', {
 			method: 'POST',
 			headers: {
@@ -17,4 +17,3 @@ export const actions: Actions = {
 		if (res.ok) return { nome: funcionario.nome, success: true };
 	}
 };
-

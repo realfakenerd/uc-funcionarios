@@ -9,7 +9,6 @@ export function formatDate(
 	return formatter.format(new Date(String(date)));
 }
 
-
 export async function createOrUpdateFuncionario(formData: FormData) {
 	const nome = formData.get('Nome');
 	const sobrenome = formData.get('Sobrenome');
