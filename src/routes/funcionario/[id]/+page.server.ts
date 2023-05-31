@@ -2,7 +2,7 @@ import { createOrUpdateFuncionario } from '$lib/utils';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-	deafault: async ({ request, fetch }) => {
+	default: async ({ request, fetch }) => {
 		const data = await request.formData();
 		const id = data.get('btnId');
 		const funcionario = await createOrUpdateFuncionario(data);
