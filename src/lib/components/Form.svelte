@@ -3,7 +3,7 @@
 	import TextField from './TextField.svelte';
 
 	export let iniciouEm: string;
-	export let ativo = 'true';
+	export let ativo = true;
 	export let nome: string;
 	export let sobrenome: string;
 	export let cargo: CARGO | null = null;
@@ -60,7 +60,7 @@
 						name="estaAtivo"
 						class="radio-input"
 						bind:group={ativo}
-						value="true"
+						value={true}
 					/>
 					<div class="radio-layer" />
 				</div>
@@ -75,7 +75,7 @@
 						bind:group={ativo}
 						name="estaAtivo"
 						class="radio-input"
-						value="false"
+						value={false}
 					/>
 					<div class="radio-layer" />
 				</div>

@@ -6,7 +6,7 @@
 	export let sobrenome = '';
 	export let cargo: CARGO;
 	export let dataInicio: string;
-	export let ativo: string;
+	export let ativo: boolean;
 </script>
 
 <li>
