@@ -12,6 +12,16 @@ export const GET = (async ({ fetch, setHeaders }) => {
     return json(data);
 }) satisfies RequestHandler;
 
+export const POST = (async ({request}) => {
+    const fdata = await request.json();
+
+    return new Response(JSON.stringify(fdata), {
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+}) satisfies RequestHandler;
+
 export const PUT = (async ({request,fetch}) => {
     const body = await request.json();
     console.log(body)
