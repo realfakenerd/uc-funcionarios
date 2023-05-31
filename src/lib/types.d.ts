@@ -1,13 +1,12 @@
 export interface Funcionario {
-  id: number;
+  id: string;
   nome: string;
   sobrenome: string;
   cargo: CARGO;
-  dataInicio: string | null;
+  dataInicio: string;
   ativo: boolean;
 }
 
-// DESENVOLVEDOR, ADMINISTRADOR
 export const enum CARGO {
   DESENVOLVEDOR = 'DESENVOLVEDOR',
   ADMINISTRADOR = 'ADMINISTRADOR'
@@ -23,5 +22,3 @@ export interface Routes {
   title: string;
   d: D;
 }
-
-

@@ -4,11 +4,11 @@
 	import TextField from './TextField.svelte';
 
 	export let iniciouEm: string;
-	export let estaAtivo = true;
+	export let estaAtivo = 'true';
 	export let nome: string;
 	export let sobrenome: string;
 	export let cargo: CARGO | null = null;
-
+	export let id: number | null;
 	export let extraOptions = {} satisfies HTMLFormAttributes;
 	export let formMethod: string;
 </script>
@@ -26,7 +26,14 @@
 
 	<fieldset class="flex flex-col md:flex-row items-center justify-between w-full gap-2">
 		<section class="select-container">
-			<select required class="select-input" class:value={cargo} bind:value={cargo} name="cargoSelect" id="selection">
+			<select
+				required
+				class="select-input"
+				class:value={cargo}
+				bind:value={cargo}
+				name="cargoSelect"
+				id="selection"
+			>
 				<option value="DESENVOLVEDOR">Desenvolvedor</option>
 				<option value="ADMINISTRADOR">Administrador</option>
 			</select>
@@ -48,13 +55,12 @@
 		<legend>está ativo</legend>
 		<div class="radio-container">
 			<input
-				checked
 				type="radio"
 				id="radioSIM"
 				name="estaAtivo"
 				class="radio-input-primary radio-input"
 				bind:group={estaAtivo}
-				value={true}
+				value="true"
 			/>
 			<label for="radioSIM">Sim</label>
 		</div>
@@ -66,13 +72,15 @@
 				bind:group={estaAtivo}
 				name="estaAtivo"
 				class="radio-input radio-input-primary"
-				value={false}
+				value="false"
 			/>
 			<label for="radioNAO">Não</label>
 		</div>
 	</fieldset>
 
-	<button class="btn interactive-bg-primary-container w-full" type="submit">enviar</button>
+	<button name="btnId" value={id} class="btn interactive-bg-primary-container w-full" type="submit"
+		>enviar</button
+	>
 </form>
 
 <style lang="postcss">

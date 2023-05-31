@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { CARGO } from '$lib/types';
-	import { formatDate } from '$lib/utils';
 	import Form from '../Form.svelte';
 	import Icon from '../Icon.svelte';
 	import BottomSheet from './BottomSheet.svelte';
@@ -9,29 +8,33 @@
 	export let nome = '';
 	export let sobrenome = '';
 	export let cargo: CARGO;
-	export let dataInicio: string | null;
-	export let estaAtivo: boolean = true;
+	export let dataInicio: string;
+	export let ativo: boolean;
 
 	let showEditBottomSheet = false;
 	let isDeleteModalOpen = false;
 
 	async function deletaFuncionario(e: CustomEvent<{ method: 'clickConfirm' | 'clickCancel' }>) {
 		const method = e.detail.method;
-		if (method === 'clickConfirm') {
-			const res = await fetch('http://187.60.56.72:9191/funcionario/' + id, {
-				method: 'DELETE'
-			});
-			console.log(await res.json());
-			return;
+		try {
+			if (method === 'clickConfirm') {
+				await fetch('http://187.60.56.72:9191/funcionario/' + id, {
+					method: 'DELETE'
+				});
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}
+
+	const data = dataInicio?.split('-').reverse().join('/');
 </script>
 
 <li class="card group" id={String(id)}>
 	<hgroup class="group-hover:text-on-tertiary-container">
 		<div>
 			<h1>{nome} {sobrenome}</h1>
-			{#if estaAtivo}
+			{#if ativo}
 				<span>funcionario ativo</span>
 			{/if}
 		</div>
@@ -40,7 +43,7 @@
 
 	<section>
 		<div>
-			<p>inicou em: {dataInicio}</p>
+			<p>Iniciou em: {data}</p>
 		</div>
 		<ul>
 			<li>
@@ -54,7 +57,16 @@
 				</button>
 				{#if showEditBottomSheet}
 					<BottomSheet height={370} on:close={() => (showEditBottomSheet = false)}>
-						<Form {cargo} iniciouEm={dataInicio} {estaAtivo} {sobrenome} {nome} formMethod="PUT"/>
+						<Form
+							{id}
+							{cargo}
+							iniciouEm={dataInicio}
+							{ativo}
+							{sobrenome}
+							{nome}
+							formMethod="POST"
+							extraOptions={{ action: '?/updateFuncionario' }}
+						/>
 					</BottomSheet>
 				{/if}
 			</li>
@@ -124,6 +136,4 @@
 	li button {
 		@apply w-10 h-10 flex items-center justify-center rounded-full;
 	}
-
-	
 </style>

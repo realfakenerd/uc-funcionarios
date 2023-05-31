@@ -4,20 +4,27 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import BottomSheet from '$lib/components/containment/BottomSheet.svelte';
 	import Form from '$lib/components/Form.svelte';
+	import { writable } from 'svelte/store';
 	export let data: PageData;
+	const funcionarios = writable(data.funcionarios);
 	let showAddBottomSheet = false;
-	console.log(data.funcionarios);
 </script>
 
 <ul class="grid gap-2">
-	{#each data.funcionarios as funcionario (funcionario.id)}
+	{#each $funcionarios as funcionario (funcionario.id)}
 		<CardFuncionario {...funcionario} />
 	{/each}
 </ul>
 
 {#if showAddBottomSheet}
 	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
-		<Form iniciouEm="" nome="" sobrenome=""  formMethod="POST"/>
+		<Form
+			iniciouEm=""
+			nome=""
+			sobrenome=""
+			formMethod="POST"
+			extraOptions={{ action: '?/createFuncionario' }}
+		/>
 	</BottomSheet>
 {/if}
 

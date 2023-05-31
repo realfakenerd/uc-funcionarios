@@ -1,32 +1,48 @@
 import type { Actions } from "./$types";
 
+
 export const actions: Actions = {
-  default: async ({ request, fetch }) => {
-    const data = await request.formData();
-    const id = Math.random() * 343;
-    const nome = data.get('Nome');
-    const sobrenome = data.get('Sobrenome');
-    const inputDate = data.get('inputDate');
-    const cargo = data.get('cargoSelect');
-    const estaAtivo = data.get('estaAtivo');
-
-    // Formatar a data no formato "$date-time"
-    const iniciouEm = new Date(inputDate as string).toISOString();
-
-    console.log(JSON.stringify({
-      id, nome, sobrenome, iniciouEm, cargo, estaAtivo
-    }));
-
+  createFuncionario: async ({ request, fetch }) => {
+    const id = Math.round(Math.random() * 999);
+    const funcionario = await createOrUpdateFuncionario(await request.formData());
     const res = await fetch('http://187.60.56.72:9191/funcionario', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        id, nome, sobrenome, iniciouEm, cargo, estaAtivo
-      })
+      body: JSON.stringify({ id, ...funcionario })
     });
 
-    if (res.ok) return { nome, success: true };
+    if (res.ok) return { nome: funcionario.nome, success: true };
+  },
+  updateFuncionario: async ({ request, fetch }) => {
+    const data = await request.formData();
+    const id = data.get('btnId');
+    const funcionario = await createOrUpdateFuncionario(data);
+    const res = await fetch('http://187.60.56.72:9191/funcionario', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id, ...funcionario })
+    });
+
+    if (res.ok) return { nome: funcionario.nome, success: true };
   }
 };
+
+async function createOrUpdateFuncionario(formData: FormData) {
+  const nome = formData.get('Nome');
+  const sobrenome = formData.get('Sobrenome');
+  const dataInicio = formData.get('inputDate');
+  const cargo = formData.get('cargoSelect');
+  const ativo = formData.get('estaAtivo');
+
+  const date = (dataInicio as string).split('-')
+  const lastDate = parseInt(date[2])
+
+  date[2] = lastDate + 1;
+
+  return { nome, sobrenome, dataInicio: date.join('-'), cargo, ativo };
+}
+
