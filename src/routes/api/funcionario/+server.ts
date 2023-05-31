@@ -12,9 +12,12 @@ export const GET = (async ({ fetch, setHeaders }) => {
     return json(data);
 }) satisfies RequestHandler;
 
-export const POST = (async ({request}) => {
+export const POST = (async ({request, fetch}) => {
     const fdata = await request.json();
-
+    await fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(fdata)
+    })
     return new Response(JSON.stringify(fdata), {
         headers: {
             'Content-Type': 'application/json'
