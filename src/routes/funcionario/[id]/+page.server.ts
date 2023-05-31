@@ -2,11 +2,12 @@ import { createOrUpdateFuncionario } from '$lib/utils';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-	default: async ({ request, fetch }) => {
-		const id = Math.round(Math.random() * 999);
-		const funcionario = await createOrUpdateFuncionario(await request.formData());
+	deafault: async ({ request, fetch }) => {
+		const data = await request.formData();
+		const id = data.get('btnId');
+		const funcionario = await createOrUpdateFuncionario(data);
 		const res = await fetch('http://187.60.56.72:9191/funcionario', {
-			method: 'POST',
+			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'
 			},
@@ -16,4 +17,3 @@ export const actions: Actions = {
 		if (res.ok) return { nome: funcionario.nome, success: true };
 	}
 };
-

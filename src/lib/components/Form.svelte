@@ -8,11 +8,10 @@
 	export let sobrenome: string;
 	export let cargo: CARGO | null = null;
 	export let id: number | null = null;
-	export let action: string;
 	export let atualizar = false;
 </script>
 
-<form class="flex flex-col gap-y-2 pb-4" method="POST" {action}>
+<form class="flex flex-col gap-y-2 pb-4" method="POST">
 	<fieldset class="flex w-full flex-col gap-2 md:flex-row">
 		<TextField value={nome} style="outlined" title="Nome" />
 		<TextField

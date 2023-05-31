@@ -66,7 +66,6 @@
 			ativo={funcionario.ativo}
 			sobrenome={funcionario.sobrenome}
 			nome={funcionario.nome}
-			action="?/updateFuncionario"
 			atualizar
 		/>
 
