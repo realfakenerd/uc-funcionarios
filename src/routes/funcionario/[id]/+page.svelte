@@ -25,7 +25,7 @@
 </script>
 
 <section class="flex flex-col gap-6">
-	<div class="flex flex-col md:flex-row md:items-center md:justify-between">
+	<div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
 		<div class="flex flex-row items-center gap-4">
 			<button
 				class="rounded-2xl fill-on-surface p-4 transition-all duration-200 hover:bg-surface-variant-hover hover:fill-on-surface-variant"
@@ -53,7 +53,7 @@
 		</div>
 	</div>
 
-	<div class="flex max-w-xl flex-col gap-4 self-center">
+	<div class="flex max-w-xl flex-col gap-4 md:self-center">
 		<Form
 			id={funcionario.id}
 			cargo={funcionario.cargo}
