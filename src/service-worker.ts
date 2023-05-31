@@ -1,5 +1,5 @@
 import { clientsClaim } from 'workbox-core';
-import { pageCache, googleFontsCache, staticResourceCache } from 'workbox-recipes';
+import { googleFontsCache, pageCache, staticResourceCache } from 'workbox-recipes';
 
 self.__WB_DISABLE_DEV_LOGS = true;
 

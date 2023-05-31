@@ -6,6 +6,6 @@ export const load = (async ({ params, fetch }) => {
 	const data = (await res.json()) as Funcionario;
 
 	return {
-		funcionarios: data
+		funcionario: data
 	};
 }) satisfies PageLoad;

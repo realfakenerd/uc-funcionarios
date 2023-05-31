@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { HTMLFormAttributes } from 'svelte/elements';
 	import type { CARGO } from '$lib/types';
 	import TextField from './TextField.svelte';
 
@@ -10,6 +9,7 @@
 	export let cargo: CARGO | null = null;
 	export let id: number | null = null;
 	export let action: string;
+	export let atualizar = false;
 </script>
 
 <form class="flex flex-col gap-y-2 pb-4" method="POST" {action}>
@@ -86,13 +86,13 @@
 	</fieldset>
 
 	<button name="btnId" value={id} class="btn interactive-bg-primary-container w-full" type="submit">
-		enviar
+		{atualizar ? 'Atualizar' : 'Enviar'}
 	</button>
 </form>
 
 <style lang="postcss">
 	.select-container {
-		@apply relative h-14 w-full min-w-[15rem] rounded-lg text-on-surface-variant;
+		@apply relative h-14 w-[20rem] min-w-[15rem] max-w-full rounded-lg text-on-surface-variant;
 	}
 
 	.select-input {

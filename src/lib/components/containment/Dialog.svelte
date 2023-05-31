@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { tick, createEventDispatcher } from 'svelte';
-	import { outroClass, enterExit, easeEmphasizedDecel, easeEmphasizedAccel } from '$lib/animation';
+	import { easeEmphasizedAccel, easeEmphasizedDecel, enterExit, outroClass } from '$lib/animation';
+	import { createEventDispatcher, tick } from 'svelte';
 
 	export let title: string;
 	export let confirmLabel: string;

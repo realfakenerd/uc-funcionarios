@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import {
-		heightTransition,
-		outroClass,
+		easeEmphasizedAccel,
 		easeEmphasizedDecel,
-		easeEmphasizedAccel
+		heightTransition,
+		outroClass
 	} from '$lib/animation';
+	import { createEventDispatcher } from 'svelte';
 	import Sheet from './_Sheet.svelte';
 
 	export let height = 160;
@@ -61,7 +61,7 @@
 	on:mouseup={() => (isDragging = false)}
 	on:touchend={() => (isDragging = false)}
 />
-<!-- svelte-ignore a11y-click-events-have-key-events -->
+
 <svelte:element
 	this={isDialog ? 'dialog' : 'div'}
 	class="bottom-sheet"

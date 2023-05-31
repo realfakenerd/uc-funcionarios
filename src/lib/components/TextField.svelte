@@ -1,11 +1,10 @@
 <script lang="ts">
+	import Icon from '$lib/components/Icon.svelte';
 	import type {
 		HTMLAttributes,
 		HTMLInputAttributes,
 		HTMLTextareaAttributes
 	} from 'svelte/elements';
-	import Icon from '$lib/components/Icon.svelte';
-	import { createEventDispatcher } from 'svelte';
 	let wrapper: HTMLDivElement, textarea: HTMLTextAreaElement;
 	let id = `input-${Math.random() * 1.23}`;
 	export let value = '';
@@ -20,7 +19,6 @@
 	export let isDate = false;
 	export let isTextarea = false;
 	export let supportingText: null | string = null;
-	const dispatch = createEventDispatcher();
 	export let extraWrapperOptions = {} satisfies HTMLAttributes<HTMLDivElement>;
 	export let extraInputOptions = {} satisfies HTMLInputAttributes & HTMLTextareaAttributes;
 	function resize() {

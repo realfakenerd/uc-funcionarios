@@ -1,9 +1,13 @@
 <script lang="ts">
-	import '../app.css';
+	import { easeEmphasizedAccel, easeEmphasizedDecel } from '$lib/animation';
+	import Form from '$lib/components/Form.svelte';
+	import Icon from '$lib/components/Icon.svelte';
+	import BottomSheet from '$lib/components/containment/BottomSheet.svelte';
 	import '@fontsource/roboto';
-	import {easeEmphasizedDecel,easeEmphasizedAccel}from'$lib/animation';
-
+	import { fly } from 'svelte/transition';
+	import '../app.css';
 	export let data;
+	let showAddBottomSheet = false;
 </script>
 
 <header class="flex flex-col gap-3 p-4 md:flex-row md:items-center">
@@ -12,6 +16,7 @@
 			width="160"
 			height="36"
 			class="h-auto w-40"
+			alt="UC logo"
 			src="https://cdn.bitrix24.com.br/b13772517/sender/be6/be612427cf98746b2aabd3989116d1a8/c73ac8c47757f6a2ac317088ba524040.png"
 		/>
 	</figure>
@@ -20,10 +25,25 @@
 
 {#key data.currentRoute}
 	<main
-		in:fly={{ x: -5, duration: 500, delay: 200, easing: easeEmphasizedDecel }}
-		out:fly={{ x: 5, duration: 200, easing: easeEmphasizedAccel }}
-		class="flex flex-col gap-4 p-4 text-on-surface-variant"
+		in:fly={{ y: -5, duration: 500, delay: 200, easing: easeEmphasizedDecel }}
+		out:fly={{ y: 5, duration: 200, easing: easeEmphasizedAccel }}
+		class="flex flex-col gap-4 p-4"
 	>
 		<slot />
 	</main>
 {/key}
+
+{#if showAddBottomSheet}
+	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
+		<Form iniciouEm="" nome="" sobrenome="" action="?/createFuncionario" />
+	</BottomSheet>
+{/if}
+
+<div class="fixed bottom-2 right-3">
+	<button
+		on:click={() => (showAddBottomSheet = true)}
+		class="fab fab-normal interactive-bg-tertiary"
+	>
+		<Icon d={`M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z`} />
+	</button>
+</div>
