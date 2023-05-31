@@ -3,6 +3,7 @@
 	import Form from '$lib/components/Form.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import BottomSheet from '$lib/components/containment/BottomSheet.svelte';
+	import Dialog from '$lib/components/containment/Dialog.svelte';
 	import '@fontsource/roboto';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
