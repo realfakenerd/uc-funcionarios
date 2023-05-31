@@ -7,7 +7,8 @@
 	import { fly } from 'svelte/transition';
 	import '../app.css';
 	export let data;
-	let showAddBottomSheet = false;
+	let showModal = false;
+
 </script>
 
 <header class="flex flex-col gap-3 p-4 md:flex-row md:items-center">
@@ -20,7 +21,7 @@
 			src="https://cdn.bitrix24.com.br/b13772517/sender/be6/be612427cf98746b2aabd3989116d1a8/c73ac8c47757f6a2ac317088ba524040.png"
 		/>
 	</figure>
-	<h1 class="text-headline-small">Listagem de funcionarios</h1>
+	<h1 class="text-headline-small">Listagem de funcionários</h1>
 </header>
 
 {#key data.currentRoute}
@@ -32,16 +33,17 @@
 		<slot />
 	</main>
 {/key}
-
-{#if showAddBottomSheet}
-	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
-		<Form iniciouEm="" nome="" sobrenome="" />
-	</BottomSheet>
-{/if}
+<Dialog
+	title="Enviar funcionário pro Banco de Dados?"
+	confirmLabel=""
+	bind:open={isDeleteModalOpen}
+>
+	<Form iniciouEm="" nome="" sobrenome="" />
+</Dialog>
 
 <div class="fixed bottom-2 right-3">
 	<button
-		on:click={() => (showAddBottomSheet = true)}
+		on:click={() => (showModal = true)}
 		class="fab fab-normal interactive-bg-tertiary"
 		title="FAB"
 	>
