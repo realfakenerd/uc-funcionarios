@@ -13,7 +13,7 @@
 		const method = e.detail.method;
 		try {
 			if (method === 'clickConfirm') {
-				await fetch('http://187.60.56.72:9191/funcionario/' + funcionario.id, {
+				await fetch('/api/funcionario/' + funcionario.id, {
 					method: 'DELETE'
 				});
 				goto('/');
