@@ -36,7 +36,7 @@
 <Dialog
 	title="Enviar funcionário pro Banco de Dados?"
 	confirmLabel=""
-	bind:open={isDeleteModalOpen}
+	bind:open={showModal}
 >
 	<Form iniciouEm="" nome="" sobrenome="" />
 </Dialog>
