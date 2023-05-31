@@ -6,7 +6,7 @@ export const actions: Actions = {
 		const id = Math.round(Math.random() * 999);
 		const funcionario = await createOrUpdateFuncionario(await request.formData());
 		console.log('---------------------------')
-		const res = await fetch('/api/funcionario', {
+		const res = await fetch('http://187.60.56.72:9191/funcionario', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json'
