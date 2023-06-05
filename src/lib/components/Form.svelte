@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { enhance } from '$app/forms';
 	import type { CARGO } from '$lib/types';
 	import TextField from './TextField.svelte';
 
@@ -7,11 +8,11 @@
 	export let nome: string;
 	export let sobrenome: string;
 	export let cargo: CARGO | null = null;
-	export let id: number | null = null;
+	export let id: string | null = null;
 	export let atualizar = false;
 </script>
 
-<form class="flex flex-col gap-y-2 pb-4" method="POST">
+<form use:enhance class="flex flex-col gap-y-2 pb-4 text-on-surface" method="POST">
 	<fieldset class="flex w-full flex-col gap-2 md:flex-row">
 		<TextField value={nome} style="outlined" title="Nome" />
 		<TextField

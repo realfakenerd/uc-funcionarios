@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { CARGO } from '$lib/types';
-	import { formatDate } from '$lib/utils';
-	export let id: number;
+	import { convertToBool, formatDate } from '$lib/utils';
+	export let id: string;
 	export let nome = '';
 	export let sobrenome = '';
 	export let cargo: CARGO;
@@ -14,8 +14,10 @@
 		<hgroup class="group-hover:text-on-tertiary-container">
 			<div>
 				<h1 aria-label={`Nome: ${nome} ${sobrenome}`}>{nome} {sobrenome}</h1>
-				{#if ativo}
-					<span role="status" aria-live="assertive">funcionario ativo</span>
+				{#if convertToBool(ativo)}
+					<span class="bg-primary text-on-primary" role="status" aria-live="assertive">funcionario ativo</span>
+					{:else}
+					<span class="bg-error text-on-error" role="status" aria-live="assertive">funcionario não ativo</span>
 				{/if}
 			</div>
 			<h2>{cargo.toLowerCase()}</h2>
@@ -43,8 +45,7 @@
 	}
 
 	hgroup span {
-		@apply flex items-center rounded-lg bg-primary p-1 text-label-small
-		text-on-primary;
+		@apply flex items-center rounded-lg p-1 text-label-small;
 	}
 
 	h2 {

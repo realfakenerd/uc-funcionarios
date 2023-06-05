@@ -6,7 +6,7 @@ export const actions: Actions = {
 		const data = await request.formData();
 		const id = data.get('btnId');
 		const funcionario = await createOrUpdateFuncionario(data);
-		const res = await fetch('http://187.60.56.72:9191/funcionario', {
+		const res = await fetch('/api/funcionario', {
 			method: 'PUT',
 			headers: {
 				'Content-Type': 'application/json'

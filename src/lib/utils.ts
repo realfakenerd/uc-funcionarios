@@ -7,9 +7,11 @@ export function formatDate(
 ) {
 	if (date === null) return 'N/A'; 
 	  
-	const formatter = new Intl.DateTimeFormat(locales, { dateStyle });
+	const formatter = new Intl.DateTimeFormat(locales, { dateStyle, timeZone: 'UTC' });
 	return formatter.format(new Date(String(date)));
 }
+
+export const convertToBool = (val: unknown) => val !== 'false';
 
 export async function createOrUpdateFuncionario(formData: FormData) {
 	const nome = formData.get('Nome');
@@ -18,10 +20,6 @@ export async function createOrUpdateFuncionario(formData: FormData) {
 	const cargo = formData.get('cargoSelect');
 	const ativo = formData.get('estaAtivo');
 
-	const date = (dataInicio as string).split('-') as [string, string, string] ;
-	const lastDate = parseInt(date[2], 10);
 
-	date[2] = String(lastDate + 1);
-
-	return { nome, sobrenome, dataInicio: date.join('-'), cargo, ativo };
+	return { nome, sobrenome, dataInicio, cargo, ativo };
 }

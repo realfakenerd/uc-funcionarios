@@ -30,7 +30,6 @@
 		bind:this={dialog}
 		aria-modal={open}
 		aria-hidden={!open}
-		role="dialog"
 		on:cancel|preventDefault={() => {
 			if (preventDismiss) return;
 			open = false;
@@ -49,6 +48,8 @@
 			<div id="modal-description" class="sr-only">{title}. {confirmLabel}. {cancelLabel}</div>
 			<h2 class="text-headline-small" role="heading" aria-level="2">{title}</h2>
 			<div class="text-body-medium text-on-error-container/70"><slot /></div>
+
+			{#if confirmLabel}
 			<div class="buttons">
 				{#if cancelLabel}
 					<button
@@ -73,6 +74,7 @@
 					{confirmLabel}
 				</button>
 			</div>
+			{/if}
 		</div>
 	</dialog>
 {/key}

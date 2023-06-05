@@ -3,7 +3,7 @@
 	import Form from '$lib/components/Form.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Dialog from '$lib/components/containment/Dialog.svelte';
-	import { formatDate } from '$lib/utils';
+	import { convertToBool, formatDate } from '$lib/utils';
 	import type { PageData } from './$types';
 	export let data: PageData;
 	const { funcionario } = data;
@@ -22,6 +22,8 @@
 			console.error(error);
 		}
 	}
+
+	const isAtivo = convertToBool(funcionario.ativo);
 </script>
 
 <section class="flex flex-col gap-6">
@@ -30,7 +32,7 @@
 			<button
 				title="Go back button"
 				class="rounded-2xl fill-on-surface p-4 transition-all duration-200 hover:bg-surface-variant-hover hover:fill-on-surface-variant"
-				on:click={() => history.back()}
+				on:click={() => goto('/')}
 			>
 				<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px"
 					><path d="M0 0h24v24H0V0z" fill="none" /><path
@@ -43,12 +45,16 @@
 		</div>
 
 		<div class="flex flex-row gap-2">
-			{#if funcionario.ativo}
-				<div class="rounded-md bg-primary-container p-4 text-body-medium text-on-primary-container">
+			{#if isAtivo}
+				<div class="rounded-md bg-primary-container p-2 text-body-medium text-on-primary-container">
 					Funcionario ativo
 				</div>
+			{:else}
+				<div class="rounded-md bg-error-container p-2 text-body-medium text-on-error-container">
+					Funcionario não ativo
+				</div>
 			{/if}
-			<div class="rounded-md bg-surface-variant p-4 text-body-medium text-on-surface-variant">
+			<div class="rounded-md bg-surface-variant p-2 text-body-medium text-on-surface-variant">
 				{formatDate(funcionario.dataInicio)}
 			</div>
 		</div>
@@ -59,7 +65,7 @@
 			id={funcionario.id}
 			cargo={funcionario.cargo}
 			iniciouEm={funcionario.dataInicio}
-			ativo={funcionario.ativo}
+			ativo={isAtivo}
 			sobrenome={funcionario.sobrenome}
 			nome={funcionario.nome}
 			atualizar

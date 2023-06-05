@@ -2,13 +2,13 @@
 	import { easeEmphasizedAccel, easeEmphasizedDecel } from '$lib/animation';
 	import Form from '$lib/components/Form.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import BottomSheet from '$lib/components/containment/BottomSheet.svelte';
+	import Dialog from '$lib/components/containment/Dialog.svelte';
 	import '@fontsource/roboto';
 	import { fly } from 'svelte/transition';
 	import '../app.css';
-	export let data;
-	let showAddBottomSheet = false;
-
+	import type { ActionData, LayoutData } from './$types';
+	export let data: LayoutData;
+	let showModal = false;
 </script>
 
 <header class="flex flex-col gap-3 p-4 md:flex-row md:items-center">
@@ -34,15 +34,18 @@
 	</main>
 {/key}
 
-{#if showAddBottomSheet}
-	<BottomSheet height={350} on:close={() => (showAddBottomSheet = false)}>
-		<Form iniciouEm="" nome="" sobrenome="" />
-	</BottomSheet>
-{/if}
+<Dialog
+	title="Remover funcionario?"
+	on:click
+	confirmLabel=""
+	bind:open={showModal}
+>
+	<Form iniciouEm="" nome="" sobrenome="" />
+</Dialog>
 
 <div class="fixed bottom-2 right-3">
 	<button
-		on:click={() => (showAddBottomSheet = true)}
+		on:click={() => (showModal = true)}
 		class="fab fab-normal interactive-bg-tertiary"
 		title="FAB"
 	>
